@@ -1,0 +1,166 @@
+﻿@model authentication_security.Core.Application.ViewModels.SaveUserViewModel
+
+@{
+    ViewBag.Title = "Registro de Usuario";
+}
+
+<div class="register-container">
+    <h2>Registro de Usuario</h2>
+
+    <form asp-action="Register" method="post" enctype="multipart/form-data">
+
+        <div class="form-group mb-2">
+            <label asp-for="UserName">Nombre de Usuario</label>
+            <input asp-for="UserName" class="form-control" placeholder="Ingrese su nombre de usuario" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+
+            <small class="form-text text-muted mt-2">
+                El nombre de usuario debe iniciar con una letra y no puede contener caracteres especiales. Deben ser al menos tres caracteres alfanuméricos.
+            </small>
+        </div>
+        
+
+        <div class="form-group mb-2">
+           
+            <div class="input-group">
+                <div>
+                    <label>Nombre</label>
+                    <input asp-for="Name" class="form-control" placeholder="Nombre" />
+                </div>
+                <div>
+                    <label>Apellido</label>
+                    <input asp-for="LastName" class="form-control" placeholder="Apellido" />
+                </div>                
+            </div>
+        </div>
+
+        <div class="form-group mb-2">
+            <label asp-for="Email">Correo Electrónico</label>
+            <input asp-for="Email" class="form-control" placeholder="Ingrese su correo electrónico" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-2">
+            <label asp-for="Password">Contraseña</label>
+            <input asp-for="Password" type="password" class="form-control" placeholder="Ingrese su contraseña" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-2">
+            <label>Confirmar Contraseña</label>
+            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirme su contraseña" autocomplete="off" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        <small class="form-text text-muted">
+            La contraseña debe contener al menos 8 dígitos, incluyendo números, letras y caracteres especiales.
+        </small>
+
+        <button type="submit" class="btn btn-primary mt-3">Registrarse</button>
+    </form>
+</div>
+
+@* Modal donde se visualiza el error presentado, debido a la solicitud enviada por el usuario.*@
+
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <p>@TempData["ErrorMessage"]</p>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            var errorMessage = '@TempData["ErrorMessage"]';
+            if (errorMessage) {
+                $('#errorModal').modal('show');
+            }
+        });
+    </script>
+}
+
+
+<style>
+    .register-container {
+        max-width: 600px;
+        margin: 5rem auto;
+        padding: 2rem;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-control {
+        padding: 0.75rem;
+        font-size: 1rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 100%;
+    }
+
+    .input-group {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .input-group .form-control {
+        flex: 1;
+    }
+
+    .btn-primary {
+        background-color: #4a67d6;
+        color: #fff;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .btn-primary:hover {
+        background-color: #3b55b0;
+    }
+
+    .text-danger {
+        color: red;
+        font-size: 0.875rem;
+    }
+
+    .form-text {
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        color: #6c757d;
+    }
+
+    small {
+        display: block;
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        color: #6c757d;
+    }
+</style>

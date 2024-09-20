@@ -1,0 +1,6 @@
+@sysrtem_authentication_security.API_HostAddress = http://localhost:5110
+
+GET {{sysrtem_authentication_security.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

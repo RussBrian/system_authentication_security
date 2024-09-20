@@ -1,0 +1,153 @@
+﻿@model authentication_security.Core.Application.ViewModels.LogInRequestViewModel
+
+@{
+    ViewBag.Title = "Inicio de Sesión";
+}
+
+<div class="login-container">
+    <div class="welcome-section">
+        <h2>BIENVENIDO!!</h2>
+        <p>Mi nombre es <b>Russel Brian Martinez Veloz</b>, aqui es donde inicia mi prueba. Espero y sea de su agrado la aplicación.<b>¡Muchas Gracias!</b></p>
+        <p>¿No tienes una cuenta? <a asp-controller="User" asp-action="Register" class="register-link">¡Vamos regístrate!</a></p>
+    </div>
+
+    <div class="login-section">
+        <h2>Inicia Sesión</h2>
+        <form asp-action="Index" method="post">
+            <div class="form-group">
+                <label asp-for="UserNameOrEmail">Correo electrónico o Nombre de usuario</label>
+                <input asp-for="UserNameOrEmail" class="form-control" placeholder="Ingrese su correo o nombre de usuario" />
+                <span asp-validation-for="UserNameOrEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Contraseña</label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Contraseña" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Inicia Sesión</button>
+        </form>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <p>@TempData["ErrorMessage"]</p>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            var errorMessage = '@TempData["ErrorMessage"]';
+            if (errorMessage) {
+                $('#errorModal').modal('show');
+            }
+        });
+    </script>
+}
+
+
+<style>
+
+    .login-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        height: 70vh;
+        margin-top: 4rem;
+        background-color: #f0f0f0;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .welcome-section {
+        background-color: #d0d0d0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        color: #000;
+    }
+
+    .welcome-section h2 {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .welcome-section p {
+        margin-top: 1rem;
+        text-align: center;
+        font-size: 1.2rem;
+    }
+
+    .register-link {
+        color: #4a67d6;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .register-link:hover {
+        text-decoration: underline;
+    }
+
+    .login-section {
+        background-color: rgba(255, 255, 255, 0.9);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .login-section h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-control {
+        padding: 0.75rem;
+        font-size: 1rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 100%;
+    }
+
+    .btn-primary {
+        background-color: #4a67d6;
+        color: #fff;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        background-color: #3b55b0;
+    }
+
+    .text-danger {
+        color: red;
+        font-size: 0.875rem;
+    }
+</style>
