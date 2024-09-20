@@ -18,13 +18,12 @@ public class TokenRepository(AppContext context) : ITokenRepository
     {
         UserToken? userTokenInDb = await GetByUserId(userId);
 
-        UserToken userUpdated = new()
+        if (userTokenInDb != null)
         {
-            IsValid = false,
-        };
-        _context.Entry(userTokenInDb).CurrentValues.SetValues(userUpdated);
-        await _context.SaveChangesAsync();
+            userTokenInDb.IsValid = false;
+            await _context.SaveChangesAsync();
+        }
     }
 
-    public async Task<UserToken?> GetByUserId(string userId) => await Entity.SingleOrDefaultAsync(u => u.UserId == userId);
+    public async Task<UserToken?> GetByUserId(string userId) => await Entity.FirstOrDefaultAsync(u => u.UserId == userId);
 }

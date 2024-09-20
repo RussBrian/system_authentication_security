@@ -15,15 +15,8 @@ public class UserRepository(AppContext context) : IUserRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(User user, string id)
-    {
-        var entry = await Entity.FindAsync(id);
-        _context.Entry(entry).CurrentValues.SetValues(user);
-        await _context.SaveChangesAsync();
-    }
-
     public async Task<User?> GetUserById(string id) => await Entity.FindAsync(id);
-    public async Task<User?> GetUserByEmail(string email) => await Entity.SingleOrDefaultAsync(u => u.Email == email);
-    public async Task<User?> GetUserByUserName(string userName) => await Entity.SingleOrDefaultAsync(u => u.UserName == userName);
+    public async Task<User?> GetUserByEmail(string email) => await Entity.FirstOrDefaultAsync(u => u.Email == email);
+    public async Task<User?> GetUserByUserName(string userName) => await Entity.FirstOrDefaultAsync(u => u.UserName == userName);
 
 }

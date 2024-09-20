@@ -23,7 +23,15 @@ public class UserController : Controller
 
     public async Task<IActionResult> Index()
     {
-        return View(await _userService.GetUser(_userViewModel.Id));
+        if(_userViewModel != null)
+        {
+            return View(await _userService.GetUser(_userViewModel.Id));
+        }
+        else
+        {
+            return RedirectToAction("Index", "Login");
+        }
+        
     }
 
     [ServiceFilter(typeof(LoginAuthorize))]
