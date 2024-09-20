@@ -46,18 +46,22 @@
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
 
-        <div class="form-group mb-2">
+        <small class="form-text text-muted">
+            La contraseña debe contener al menos 8 dígitos, incluyendo números, letras.
+        </small>
+
+        <div class="form-group mb-1">
             <label>Confirmar Contraseña</label>
             <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirme su contraseña" autocomplete="off" />
             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
         </div>
 
-        <small class="form-text text-muted">
-            La contraseña debe contener al menos 8 dígitos, incluyendo números, letras y caracteres especiales.
-        </small>
+        
 
         <button type="submit" class="btn btn-primary mt-3">Registrarse</button>
     </form>
+
+    <a class="btn btn-secondary mt-2" asp-controller="Login" asp-action="Index">Volver</a>
 </div>
 
 @* Modal donde se visualiza el error presentado, debido a la solicitud enviada por el usuario.*@

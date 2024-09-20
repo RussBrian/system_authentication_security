@@ -3,8 +3,6 @@ using authentication_security.Core.Application.Interfaces;
 using authentication_security.Core.Application.ViewModels;
 using authentication_security.Core.Application.Common;
 using authentication_security.Core.Domain.Entities;
-using Microsoft.Extensions.Options;
-using authentication_security.Core.Domain.Settings;
 using System.Text.RegularExpressions;
 
 namespace authentication_security.Core.Application.Service;

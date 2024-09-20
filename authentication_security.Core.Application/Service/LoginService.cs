@@ -65,6 +65,11 @@ public class LoginService
 
     public async Task InvalidateTokenForUser(string userId) => await _tokenRepository.InvalidateUserToken(userId);
 
+
+    /// <summary>
+    /// Metodo que registra el token perteneciente al usuario una vez este se registra. 
+    /// <param name="userName">Nombre de usuario ingresado</param>
+    /// <returns>Devuelve true si el userName cumple con la expresión regular, del caso contrario devuelve false.</returns>
     private async Task<Result> AddUserTokenInDB(string token, string userId)
     {
         UserToken user = new()
@@ -80,7 +85,6 @@ public class LoginService
 
     private string GenerateJwtToken(User user)
     {
-
         var claims = new List<Claim>
         {
             new (ClaimTypes.NameIdentifier, user.UserName),
@@ -88,7 +92,7 @@ public class LoginService
             new (ClaimTypes.Email, user.Email)
         };
 
-        // Clave de seguridad
+        // Clave
         var key = Encoding.UTF8.GetBytes(_jwtSettings.Key);
         var symmetricSecurityKey = new SymmetricSecurityKey(key);
         var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
@@ -97,12 +101,11 @@ public class LoginService
         var jwtSecurityToken = new JwtSecurityToken(
             issuer: _jwtSettings.Issuer,
             audience: _jwtSettings.Audience,
-            claims: claims, // Aquí claims es una lista de Claim
-            expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes), // Expiración del token
+            claims: claims,
+            expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
             signingCredentials: signingCredentials
         );
 
-        // Convertir el token a string y retornarlo
         return new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
     }
 

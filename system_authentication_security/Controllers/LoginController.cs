@@ -19,6 +19,7 @@ namespace system_authentication_security.Controllers
             return View(new LogInRequestViewModel());
         }
 
+        [ServiceFilter(typeof(LoginAuthorize))]
         [HttpPost]
         public async Task<IActionResult> Index(LogInRequestViewModel loginVm)
         {
