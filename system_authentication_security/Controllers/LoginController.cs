@@ -7,12 +7,10 @@ using system_authentication_security.Middleware;
 namespace system_authentication_security.Controllers
 {
     public class LoginController
-        (IUserService userService,
-        ILoginService loginService
+        (ILoginService loginService
         ) 
         : Controller
     {
-        private readonly IUserService _userService = userService;
         private readonly ILoginService _loginService = loginService;
 
         [ServiceFilter(typeof(LoginAuthorize))]
@@ -22,7 +20,6 @@ namespace system_authentication_security.Controllers
         }
 
         [HttpPost]
-        [ServiceFilter(typeof(LoginAuthorize))]
         public async Task<IActionResult> Index(LogInRequestViewModel loginVm)
         {
             if (!ModelState.IsValid)
@@ -44,7 +41,8 @@ namespace system_authentication_security.Controllers
 
         }
 
-        public async Task<IActionResult> LogOut(string id)
+        [HttpPost]
+        public async Task<IActionResult> Logout(string id)
         {
             await _loginService.InvalidateTokenForUser(id);
             HttpContext.Session.Remove("user");

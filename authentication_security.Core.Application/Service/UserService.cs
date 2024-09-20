@@ -54,6 +54,19 @@ public class UserService(IUserRepository userRepository) : IUserService
         return Result.Success();
     }       
 
+    public async Task<UserViewModel> GetUser(string userId)        
+    {
+        User? user = await _userRepository.GetUserById(userId);
+        return new UserViewModel()
+        {
+            Id = user.Id,
+            Name = user.Name,
+            LastName = user.LastName,
+            UserName = user.UserName,
+            Email = user.Email
+        };
+
+    }
 
     #region Validation for user
     /// <summary>

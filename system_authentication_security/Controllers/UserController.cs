@@ -3,16 +3,27 @@ using authentication_security.Core.Application.Interfaces;
 using authentication_security.Core.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using system_authentication_security.Middleware;
+using authentication_security.Core.Application.Helper;
 
 namespace system_authentication_security.Controllers;
 
-public class UserController(IUserService userService) : Controller
+public class UserController : Controller
 {
-    private readonly IUserService _userService = userService;
-
-    public IActionResult Index()
+    private readonly IUserService _userService;
+    private readonly UserViewModel _userViewModel;
+    private readonly IHttpContextAccessor _contextAccessor;
+    public UserController
+        (IUserService userService, 
+        IHttpContextAccessor contextAccessor)
     {
-        return View();
+        _userService = userService;
+        _contextAccessor = contextAccessor;
+        _userViewModel = _contextAccessor.HttpContext.Session.Get<UserViewModel>("user");
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        return View(await _userService.GetUser(_userViewModel.Id));
     }
 
     [ServiceFilter(typeof(LoginAuthorize))]

@@ -18,7 +18,7 @@
     </div>
 
     <div class="logout-section">
-        <form asp-action="Logout" method="post">
+        <form asp-action="Logout" asp-controller="Login" asp-route-itemid="@Model.Id" method="post">
             <button type="submit" class="btn-logout">Cerrar Sesión</button>
         </form>
     </div>
